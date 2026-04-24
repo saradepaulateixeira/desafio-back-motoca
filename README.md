@@ -12,11 +12,7 @@
 
 ## 📸 Preview
 
-<a href="docs/demo.gif">
-  <img src="docs/demo.gif" alt="API Demo" width="100%">
-</a>
-
-Demonstração dos endpoints principais: listagem de veículos, filtro por tipo, criação de lead e dashboard com métricas.
+> Demonstração dos endpoints principais: listagem de veículos, filtro por tipo, criação de lead e dashboard com métricas.
 
 ---
 
@@ -155,7 +151,7 @@ http://localhost:8000
 ### 🔐 Autenticação
 
 | Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|----------|------|
+| ----- | -------- | --------- | ----- |
 | POST | `/api/auth/login` | Login de usuário | Não |
 | POST | `/api/auth/logout` | Logout | Sim |
 | GET | `/api/auth/me` | Dados do usuário | Sim |
@@ -163,7 +159,7 @@ http://localhost:8000
 ### 🚗 Veículos
 
 | Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|----------|------|
+| ----- | -------- | --------- | ----- |
 | GET | `/api/vehicles` | Listar veículos | Não |
 | GET | `/api/vehicles?type=car` | Filtrar por tipo | Não |
 | GET | `/api/vehicles?max_price=80000` | Filtrar por preço | Não |
@@ -175,7 +171,7 @@ http://localhost:8000
 ### 👥 Leads
 
 | Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|----------|------|
+| ----- | -------- | --------- | ----- |
 | POST | `/api/leads` | Criar lead | Não |
 | GET | `/api/leads` | Listar leads | Sim |
 | GET | `/api/vehicles/{id}/leads` | Leads por veículo | Sim |
@@ -183,7 +179,7 @@ http://localhost:8000
 ### 📊 Dashboard
 
 | Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|----------|------|
+| ----- | -------- | --------- | ----- |
 | GET | `/api/dashboard` | Métricas gerais | Sim |
 
 ---
@@ -359,15 +355,14 @@ Consulte a documentação oficial das tecnologias utilizadas:
 
 ---
 
-## 👨‍💻 Autor
+## 👩‍💻 Autora
 
-**Seu Nome**
-- Email: seu.email@exemplo.com
-- GitHub: github.com/seu-usuario
-- LinkedIn: linkedin.com/in/seu-perfil
+**Sara de Paula Teixeira**
+- Email: saradepaulateixeira@gmail.com
+- GitHub: github.com/saradepaulateixeira
 
 ---
 
 <p align="center">
- Feito com ❤️ usando Laravel
+  Feito com ❤️ usando Laravel
 </p>
