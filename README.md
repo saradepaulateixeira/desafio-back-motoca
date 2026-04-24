@@ -1,251 +1,373 @@
-# 🧪 Teste Técnico — Backend Laravel (Concessionária)
+# 🚗 Concessionaria API
 
-Olá! 👋
-Este é o teste técnico para a vaga de **Desenvolvedor Backend Júnior**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker">
+  <img src="https://img.shields.io/badge/Nginx-269199?style=for-the-badge&logo=nginx">
+</p>
 
-O objetivo é avaliar organização de código, API REST, Laravel, PostgreSQL, Docker e documentação de APIs com Postman.
+> API REST completa para gerenciamento de veículos e leads de uma concessionária, com autenticação, dashboard e métricas.
 
----
+## 📸 Preview
 
-# 🚗 Desafio
+<a href="docs/demo.gif">
+  <img src="docs/demo.gif" alt="API Demo" width="100%">
+</a>
 
-Desenvolver uma **API REST** para gerenciamento de:
-
-* Veículos disponíveis para venda
-* Leads (clientes interessados nos veículos)
-
-Cenário: sistema interno de uma concessionária.
-
----
-
-# ⚙️ Tecnologias e ferramentas
-
-O projeto deve ser desenvolvido utilizando o seguinte stack:
-
-* PHP 8+
-* Laravel
-* PostgreSQL
-* Docker
-* Docker Compose
-* Nginx
-* Git
-* Postman (coleção exportada)
+Demonstração dos endpoints principais: listagem de veículos, filtro por tipo, criação de lead e dashboard com métricas.
 
 ---
 
-# 🐳 Ambiente de execução
+## 🛠️ Tecnologias
 
-A aplicação deve rodar em containers com a seguinte estrutura:
+| Tecnologia | Descrição |
+|------------|-----------|
+| **PHP 8.4** | Linguagem de programação |
+| **Laravel 13.x** | Framework PHP |
+| **PostgreSQL 16** | Banco de dados |
+| **Docker** | Containerização |
+| **Nginx** | Servidor web |
+| **Laravel Sanctum** | Autenticação API |
 
-* app → PHP-FPM + Laravel
-* nginx → servidor web
-* postgres → banco de dados
+---
 
-A aplicação deve ficar acessível em:
+## 🏗️ Arquitetura
 
 ```
-http://localhost:8000
+┌─────────────────────────────────────────────────────────────┐
+│                      CAMADA DE ENTRADA                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
+│  │   Requests  │  │ Validation │  │   Middle   │          │
+│  └─────────────┘  └─────────────┘  └─────────────┘          │
+├─────────────────────────────────────────────────────────────┤
+│                      CAMADA DE LÓGICA                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
+│  │  Services  │  │   Models   │  │  Database  │          │
+│  └─────────────┘  └─────────────┘  └─────────────┘          │
+├─────────────────────────────────────────────────────────────┤
+│                      CAMADA DE SAÍDA                        │
+│  ┌─────────────┐  ┌─────────────┐                          │
+│  │  Resources  │  │    JSON     │                          │
+│  └─────────────┘  └─────────────┘                          │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-Após subir os containers deve ser possível executar as migrations via:
+### Estrutura de Pastas
+
+```
+concessionaria/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/Api/
+│   │   │   ├── AuthController.php
+│   │   │   ├── VehicleController.php
+│   │   │   ├── LeadController.php
+│   │   │   └── DashboardController.php
+│   │   ├── Requests/
+│   │   │   ├── StoreVehicleRequest.php
+│   │   │   ├── UpdateVehicleRequest.php
+│   │   │   └── StoreLeadRequest.php
+│   │   └── Resources/
+│   │       ├── VehicleResource.php
+│   │       ├── LeadResource.php
+│   │       └── DashboardResource.php
+│   ├── Models/
+│   │   ├── Vehicle.php
+│   │   ├── Lead.php
+│   │   └── User.php
+│   └── Services/
+│       ├── VehicleService.php
+│       ├── LeadService.php
+│       └── DashboardService.php
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── docker/
+│   ├── Dockerfile
+│   ├── nginx/default.conf
+│   └── postgres/
+├── routes/
+│   └── api.php
+├── tests/Feature/
+│   ├── AuthTest.php
+│   ├── VehicleTest.php
+│   ├── LeadTest.php
+│   └── DashboardTest.php
+├── docker-compose.yml
+├── .env
+└── README.md
+```
+
+---
+
+## 🚀 Guia de Instalação
+
+### 1. Clone o projeto
+
+```bash
+git clone https://github.com/seu-usuario/concessionaria.git
+cd concessionaria
+```
+
+### 2. Configure o ambiente
+
+```bash
+cp .env.example .env
+```
+
+### 3. Suba os containers
+
+```bash
+docker compose up -d --build
+```
+
+### 4. Execute as migrações
 
 ```bash
 docker compose exec app php artisan migrate
 ```
 
----
+### 5. Popule o banco (opcional)
 
-# 📦 Entidades do sistema
+```bash
+docker compose exec app php artisan db:seed
+```
 
-## Vehicles
+### 6. Acesse a aplicação
 
-Representa os veículos disponíveis para venda.
+```
+http://localhost:8000
+```
 
-Campos esperados:
+### Credenciais Padrão
 
-* id
-* type → `car` ou `motorcycle`
-* brand → default "Honda"
-* model
-* year
-* price
-* color
-* mileage
-* created_at / updated_at
-
----
-
-## Leads
-
-Representa clientes interessados em veículos.
-
-Campos esperados:
-
-* id
-* name
-* email
-* phone
-* vehicle_id
-* message (opcional)
-* created_at / updated_at
-
-Relacionamento:
-
-* Um veículo possui vários leads.
+| Campo | Valor |
+|-------|-------|
+| Email | admin@concessionaria.com |
+| Senha | password |
 
 ---
 
-# 🔐 Autenticação
+## 📡 Endpoints
 
-Criar autenticação simples (Sanctum ou JWT).
+### 🔐 Autenticação
 
-Rota esperada:
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|----------|------|
+| POST | `/api/auth/login` | Login de usuário | Não |
+| POST | `/api/auth/logout` | Logout | Sim |
+| GET | `/api/auth/me` | Dados do usuário | Sim |
 
-```
-POST /api/login
-```
+### 🚗 Veículos
 
-Usuários autenticados podem:
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|----------|------|
+| GET | `/api/vehicles` | Listar veículos | Não |
+| GET | `/api/vehicles?type=car` | Filtrar por tipo | Não |
+| GET | `/api/vehicles?max_price=80000` | Filtrar por preço | Não |
+| GET | `/api/vehicles/{id}` | Ver veículo | Não |
+| POST | `/api/vehicles` | Criar veículo | Sim |
+| PUT | `/api/vehicles/{id}` | Atualizar veículo | Sim |
+| DELETE | `/api/vehicles/{id}` | Excluir veículo | Sim |
 
-* Criar, editar e remover veículos
-* Listar leads
+### 👥 Leads
 
-A criação de lead deve ser pública.
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|----------|------|
+| POST | `/api/leads` | Criar lead | Não |
+| GET | `/api/leads` | Listar leads | Sim |
+| GET | `/api/vehicles/{id}/leads` | Leads por veículo | Sim |
 
----
+### 📊 Dashboard
 
-# 🚀 Funcionalidades esperadas
-
-## CRUD de Vehicles
-
-```
-GET    /api/vehicles
-POST   /api/vehicles
-GET    /api/vehicles/{id}
-PUT    /api/vehicles/{id}
-DELETE /api/vehicles/{id}
-```
-
-Validações:
-
-* model obrigatório
-* year ≥ 2000
-* price > 0
-* type deve ser `car` ou `motorcycle`
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|----------|------|
+| GET | `/api/dashboard` | Métricas gerais | Sim |
 
 ---
 
-## Leads
+## 📝 Exemplos de Requisições
 
-Criar lead:
+### Login
 
-```
-POST /api/leads
-```
-
-Listar leads:
-
-```
-GET /api/leads
-GET /api/vehicles/{id}/leads
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@concessionaria.com", "password": "password"}'
 ```
 
-Validações:
-
-* email válido
-* telefone obrigatório
-* vehicle_id deve existir
-
----
-
-# ⭐ Diferenciais que agregam valor
-
-Filtros:
-
-```
-GET /api/vehicles?type=car
-GET /api/vehicles?max_price=80000
-```
-
-Dashboard:
-
-```
-GET /api/dashboard
-```
-
-Exemplo:
-
+**Resposta:**
 ```json
 {
-  "total_vehicles": 30,
-  "total_leads": 85,
-  "most_requested_vehicle": "Honda Civic"
+  "message": "Login realizado com sucesso",
+  "token": "1|xxxxxxxxxx",
+  "user": {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@concessionaria.com"
+  }
 }
 ```
 
-Outros pontos que agregam:
+### Listar Veículos
 
-* Seeders
-* Paginação
-* Testes automatizados
-
----
-
-# 📮 Como realizar o teste
-
-## 1️⃣ Fazer um FORK do repositório
-
-Clique em **Fork** e desenvolva no seu próprio repositório.
-
----
-
-## 2️⃣ Criar uma branch
-
-```
-git checkout -b feature/teste-backend
+```bash
+curl http://localhost:8000/api/vehicles
 ```
 
+### Filtrar Veículos
+
+```bash
+# Por tipo
+curl "http://localhost:8000/api/vehicles?type=car"
+
+# Por preço máximo
+curl "http://localhost:8000/api/vehicles?max_price=50000"
+```
+
+### Criar Lead
+
+```bash
+curl -X POST http://localhost:8000/api/leads \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "phone": "(11) 99999-9999",
+    "vehicle_id": 1,
+    "message": "Tenho interesse neste veículo"
+  }'
+```
+
+### Dashboard
+
+```bash
+curl http://localhost:8000/api/dashboard \
+  -H "Authorization: Bearer SEU_TOKEN"
+```
+
+**Resposta:**
+```json
+{
+  "summary": {
+    "total_vehicles": 20,
+    "total_leads": 50,
+    "avg_price": 45200.50
+  },
+  "most_requested_vehicle": {
+    "id": 3,
+    "model": "Honda Civic",
+    "leads_count": 12
+  },
+  "leads_by_type": {
+    "car": 35,
+    "motorcycle": 15
+  },
+  "insights": [
+    "Carros recebem mais leads que motos"
+  ]
+}
+```
+
 ---
 
-## 3️⃣ Desenvolver a solução
+## 🧪 Testes
+
+Execute os testes automatizados:
+
+```bash
+docker compose exec app php artisan test
+```
+
+**Resultado esperado:**
+```
+Tests: 17 passed (27 assertions)
+```
+
+### Cobertura
+
+- ✅ Login e autenticação
+- ✅ CRUD de veículos
+- ✅ Filtros (type, max_price)
+- ✅ Création de leads
+- ✅ Dashboard com métricas
+- ✅ Validações
 
 ---
 
-## 4️⃣ Enviar a entrega
+## 📬 Postman Collection
 
-Abrir um Pull Request contendo:
+Importe o arquivo `postman_collection.json` no Postman para testar todos os endpoints.
 
-Informar na descrição:
-
-* Nome completo
-* E-mail
-* Tempo gasto para concluir
-* Observações (se houver)
+```
+Collection → Import → Select File → postman_collection.json
+```
 
 ---
 
-# 📬 Entregáveis
+## ✨ Diferenciais
 
-O repositório deve conter:
+| Diferencial | Descrição |
+|-------------|-----------|
+| **Service Layer** | Lógica de negócio isolada dos controllers |
+| **Cache** | Dashboard com cache de 60 segundos |
+| **Eager Loading** | Otimização de consultas com with() e withCount() |
+| **Form Requests** | Validações robustas e tipadas |
+| **API Resources** | Padronização de respostas JSON |
+| **Docker** | Ambiente completo e reproduzível |
+| **Testes** | Cobertura de funcionalidades principais |
+| **Clean Code** | Código organizado e legível |
 
-### ✔ Projeto Laravel funcional
+---
 
-Com `.env.example` configurado.
+## 📄 Banco de Dados
 
-### ✔ README com:
+### Tabela: vehicles
 
-* Como rodar o projeto
-* Como subir os containers
-* Como rodar migrations
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| id | bigint | PK |
+| type | enum | car, motorcycle |
+| brand | varchar(50) | Marca |
+| model | varchar(100) | Modelo |
+| year | integer | Ano |
+| price | decimal | Preço |
+| color | varchar(30) | Cor |
+| mileage | integer | Quilometragem |
 
-### ✔ Coleção Postman exportada (.json)
+### Tabela: leads
 
-Contendo:
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| id | bigint | PK |
+| name | varchar(100) | Nome |
+| email | varchar(150) | Email |
+| phone | varchar(20) | Telefone |
+| vehicle_id | bigint | FK |
+| message | text | Mensagem |
 
-* Login
-* CRUD Vehicles
-* Criar Lead
-* Listar Leads
-* Dashboard (se implementado)
+---
 
-Boa sorte 🚀
+## 📚 Documentação Complementar
+
+Consulte a documentação oficial das tecnologias utilizadas:
+- Laravel Framework
+- Laravel Sanctum
+- Docker Compose
+
+---
+
+## 👨‍💻 Autor
+
+**Seu Nome**
+- Email: seu.email@exemplo.com
+- GitHub: github.com/seu-usuario
+- LinkedIn: linkedin.com/in/seu-perfil
+
+---
+
+<p align="center">
+ Feito com ❤️ usando Laravel
+</p>
