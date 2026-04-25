@@ -150,37 +150,37 @@ http://localhost:8000
 
 ### 🔐 Autenticação
 
-| Método |  Endpoint          |     Descrição    | Auth |
-|--------|-------------------=|------------------|------|
+| Método | Endpoint           | Descrição       | Auth |
+|--------|--------------------|-----------------|------|
 | POST   | `/api/auth/login`  | Login de usuário | Não  |
-| POST   | `/api/auth/logout` | Logout           | Sim  |
+| POST   | `/api/auth/logout` | Logout          | Sim  |
 | GET    | `/api/auth/me`     | Dados do usuário | Sim  |
 
 ### 🚗 Veículos
 
-| Método |        Endpoint                 |   Descrição       | Auth  |
-|--------|---------------------------------|-------------------|-------|
-| GET    | `/api/vehicles`                 | Listar veículos   | Não   |
-| GET    | `/api/vehicles?type=car`        | Filtrar por tipo  | Não   |
-| GET    | `/api/vehicles?max_price=80000` | Filtrar por preço | Não   |
-| GET    | `/api/vehicles/{id}`            | Ver veículo       | Não   |
-| POST   | `/api/vehicles`                 | Criar veículo     | Sim   |
-| PUT    | `/api/vehicles/{id}`            | Atualizar veículo | Sim   |
-| DELETE | `/api/vehicles/{id}`            | Excluir veículo   | Sim   |
+| Método | Endpoint                     | Descrição         | Auth |
+|--------|------------------------------|-------------------|------|
+| GET    | `/api/vehicles`              | Listar veículos   | Não  |
+| GET    | `/api/vehicles?type=car`     | Filtrar por tipo  | Não  |
+| GET    | `/api/vehicles?max_price=80000` | Filtrar por preço | Não  |
+| GET    | `/api/vehicles/{id}`         | Ver veículo       | Não  |
+| POST   | `/api/vehicles`              | Criar veículo     | Sim  |
+| PUT    | `/api/vehicles/{id}`         | Atualizar veículo | Sim  |
+| DELETE | `/api/vehicles/{id}`         | Excluir veículo   | Sim  |
 
 ### 👥 Leads
 
-| Método |         Endpoint           |      Descrição    | Auth |
-|--------|----------------------------|-------------------|------|
-| POST   | `/api/leads`               | Criar lead        | Não  |
-| GET    | `/api/leads`               | Listar leads      | Sim  |
+| Método | Endpoint                  | Descrição         | Auth |
+|--------|---------------------------|-------------------|------|
+| POST   | `/api/leads`              | Criar lead        | Não  |
+| GET    | `/api/leads`              | Listar leads      | Sim  |
 | GET    | `/api/vehicles/{id}/leads` | Leads por veículo | Sim  |
 
 ### 📊 Dashboard
 
-| Método | Endpoint         | Descrição       | Auth |
-|--------|------------------|-----------------|------|
-| GET    | `/api/dashboard` | Métricas gerais | Sim  |
+| Método | Endpoint          | Descrição       | Auth |
+|--------|-------------------|-----------------|------|
+| GET    | `/api/dashboard`  | Métricas gerais | Sim  |
 
 ---
 
@@ -355,12 +355,11 @@ Consulte a documentação oficial das tecnologias utilizadas:
 
 ---
 
-## 👨‍💻 Autor
+## Autora
 
 **Seu Nome**
-- Email: seu.email@exemplo.com
-- GitHub: github.com/seu-usuario
-- LinkedIn: linkedin.com/in/seu-perfil
+- Email: saradepaulateixeira@gmail.com
+- GitHub: github.com/saradepaulateixeira
 
 ---
 
