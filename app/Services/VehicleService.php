@@ -31,10 +31,7 @@ public function getAll(array $filters = []): LengthAwarePaginator
 
     public function create(StoreVehicleRequest $request): Vehicle
     {
-        $data = $request->validated();
-        $data['brand'] = $data['brand'] ?? 'Honda';
-
-        return Vehicle::create($data);
+        return Vehicle::create($request->validated());
     }
 
     public function update(Vehicle $vehicle, UpdateVehicleRequest $request): Vehicle

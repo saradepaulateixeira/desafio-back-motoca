@@ -18,7 +18,7 @@ Route::prefix('vehicles')->group(function () {
     Route::post('/', [VehicleController::class, 'store'])->middleware('auth:sanctum');
     Route::put('/{id}', [VehicleController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/{id}', [VehicleController::class, 'destroy'])->middleware('auth:sanctum');
-    Route::get('/{vehicleId}/leads', [LeadController::class, 'show']);
+    Route::get('/{vehicle}/leads', [LeadController::class, 'show']);
 });
 
 Route::prefix('leads')->group(function () {

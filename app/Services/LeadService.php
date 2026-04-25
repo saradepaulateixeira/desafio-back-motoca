@@ -19,18 +19,12 @@ class LeadService
 
     public function getByVehicleId(int $vehicleId): Collection
     {
-        $vehicle = Vehicle::findOrFail($vehicleId);
-
-        return $vehicle->leads()->orderBy('id', 'desc')->get();
+        return Vehicle::findOrFail($vehicleId)->leads()->orderBy('id', 'desc')->get();
     }
 
     public function create(StoreLeadRequest $request): Lead
     {
-        $data = $request->validated();
-
-        $vehicle = Vehicle::findOrFail($data['vehicle_id']);
-
-        return Lead::create($data);
+        return Lead::create($request->validated());
     }
 
     public function getCountByVehicle(int $vehicleId): int

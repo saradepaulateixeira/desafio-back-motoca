@@ -34,9 +34,9 @@ class LeadController extends Controller
             ->setStatusCode(201);
     }
 
-    public function show(int $vehicleId): JsonResource
+    public function show(int $vehicle): JsonResource
     {
-        $leads = $this->leadService->getByVehicleId($vehicleId);
+        $leads = $this->leadService->getByVehicleId($vehicle);
 
         return LeadResource::collection($leads);
     }
